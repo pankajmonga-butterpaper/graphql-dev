@@ -6365,6 +6365,7 @@ type CategoryAsset {
   createdAt: DateTime!
   deletedAt: DateTime
   id: ID!
+  isActive: Boolean!
   isPrimary: Boolean!
   order: Int!
   updatedAt: DateTime!
@@ -6376,6 +6377,7 @@ input CategoryAssetCreateManyAssetInput {
   createdAt: DateTime
   deletedAt: DateTime
   id: String
+  isActive: Boolean
   isPrimary: Boolean
   order: Int
   updatedAt: DateTime
@@ -6392,6 +6394,7 @@ input CategoryAssetCreateManyCategoryInput {
   createdAt: DateTime
   deletedAt: DateTime
   id: String
+  isActive: Boolean
   isPrimary: Boolean
   order: Int
   updatedAt: DateTime
@@ -6432,6 +6435,7 @@ input CategoryAssetCreateWithoutAssetInput {
   createdAt: DateTime
   deletedAt: DateTime
   id: String
+  isActive: Boolean
   isPrimary: Boolean
   order: Int
   updatedAt: DateTime
@@ -6443,6 +6447,7 @@ input CategoryAssetCreateWithoutCategoryInput {
   createdAt: DateTime
   deletedAt: DateTime
   id: String
+  isActive: Boolean
   isPrimary: Boolean
   order: Int
   updatedAt: DateTime
@@ -6468,6 +6473,7 @@ input CategoryAssetScalarWhereInput {
   createdAt: DateTimeFilter
   deletedAt: DateTimeNullableFilter
   id: UuidFilter
+  isActive: BoolFilter
   isPrimary: BoolFilter
   order: IntFilter
   updatedAt: DateTimeFilter
@@ -6478,6 +6484,7 @@ input CategoryAssetUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   deletedAt: NullableDateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  isActive: BoolFieldUpdateOperationsInput
   isPrimary: BoolFieldUpdateOperationsInput
   order: IntFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -6537,6 +6544,7 @@ input CategoryAssetUpdateWithoutAssetInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   deletedAt: NullableDateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  isActive: BoolFieldUpdateOperationsInput
   isPrimary: BoolFieldUpdateOperationsInput
   order: IntFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -6548,6 +6556,7 @@ input CategoryAssetUpdateWithoutCategoryInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   deletedAt: NullableDateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  isActive: BoolFieldUpdateOperationsInput
   isPrimary: BoolFieldUpdateOperationsInput
   order: IntFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -6577,6 +6586,7 @@ input CategoryAssetWhereInput {
   createdAt: DateTimeFilter
   deletedAt: DateTimeNullableFilter
   id: UuidFilter
+  isActive: BoolFilter
   isPrimary: BoolFilter
   order: IntFilter
   updatedAt: DateTimeFilter
@@ -14492,6 +14502,25 @@ type DigitalContentCount {
   ProductDigitalContents: Int!
 }
 
+input DigitalContentCreateInput {
+  Company: CompanyCreateNestedOneWithoutDigitalContentInput
+  DigitalContentTags: DigitalContentTagsCreateNestedManyWithoutDigitalContentInput
+  ProductDigitalContents: ProductDigitalContentsCreateNestedManyWithoutDigitalContentInput
+  Project: ProjectCreateNestedOneWithoutDigitalContentInput
+  active: Boolean
+  assetLocation: String
+  bannerImage: String
+  createdAt: DateTime
+  description: String
+  frequency: String
+  id: String
+  order: Int
+  publishDate: DateTime
+  title: String
+  type: String
+  updatedAt: DateTime
+}
+
 input DigitalContentCreateManyCompanyInput {
   active: Boolean
   assetLocation: String
@@ -15123,6 +15152,12 @@ input DigitalContentWhereInput {
 
 input DigitalContentWhereUniqueInput {
   id: String
+}
+
+type DigitalContents {
+  """count"""
+  count: Int!
+  data: [DigitalContent!]
 }
 
 type Discount {
@@ -17105,7 +17140,7 @@ type Mutation {
   createCompany(args: CompanyCreateInput!): Company!
   createConfiguration(args: ConfigurationCreateInput!): Configuration!
   createCrossSellProducts(args: CrossSellProductsCreateInput!): CrossSellProducts!
-  createDigitalContent(args: TagsCreateInput!): Tags!
+  createDigitalContent(args: DigitalContentCreateInput!): DigitalContent!
   createGroup(args: GroupCreateInput!): Group!
   createLocation(args: RegionCreateInput!): Region!
   createPackage(args: PackageCreateInput!): Package!
@@ -17115,6 +17150,7 @@ type Mutation {
   createRegion(args: RegionCreateInput!): Region!
   createSpotPrice(args: AwPricesCreateInput!): AwPrices!
   createSubscriptions(args: SubscriptionsCreateInput!): Subscriptions!
+  createTags(args: TagsCreateInput!): Tags!
   createUpsellProduct(args: UpsellProductsCreateInput!): UpsellProducts!
   createUserCustRelation(args: UserCustRelCreateInput!): UserCustRel!
   removeApplication(id: Int!): Application!
@@ -20735,6 +20771,7 @@ type Product {
   subscription: Boolean!
   tagline: String
   tags: JSON
+  tax: Float!
   type: String
   unit: String
   unitMaster: unitMaster
@@ -20752,6 +20789,8 @@ type ProductAsset {
   """@NoAdd @NoSet"""
   createdAt: DateTime!
   id: ID!
+  isActive: Boolean!
+  isPrimary: Boolean!
   order: Int!
   productId: String!
   updatedAt: DateTime
@@ -20760,6 +20799,8 @@ type ProductAsset {
 input ProductAssetCreateManyAssetInput {
   createdAt: DateTime
   id: String
+  isActive: Boolean
+  isPrimary: Boolean
   order: Int
   productId: String!
   updatedAt: DateTime
@@ -20774,6 +20815,8 @@ input ProductAssetCreateManyProductInput {
   assetId: String!
   createdAt: DateTime
   id: String
+  isActive: Boolean
+  isPrimary: Boolean
   order: Int
   updatedAt: DateTime
 }
@@ -20811,6 +20854,8 @@ input ProductAssetCreateWithoutAssetInput {
   Product: ProductCreateNestedOneWithoutProductAssetInput!
   createdAt: DateTime
   id: String
+  isActive: Boolean
+  isPrimary: Boolean
   order: Int
   updatedAt: DateTime
 }
@@ -20819,6 +20864,8 @@ input ProductAssetCreateWithoutProductInput {
   Asset: AssetCreateNestedOneWithoutProductAssetInput!
   createdAt: DateTime
   id: String
+  isActive: Boolean
+  isPrimary: Boolean
   order: Int
   updatedAt: DateTime
 }
@@ -20840,6 +20887,8 @@ input ProductAssetScalarWhereInput {
   assetId: UuidFilter
   createdAt: DateTimeFilter
   id: UuidFilter
+  isActive: BoolFilter
+  isPrimary: BoolFilter
   order: IntFilter
   productId: UuidFilter
   updatedAt: DateTimeNullableFilter
@@ -20848,6 +20897,8 @@ input ProductAssetScalarWhereInput {
 input ProductAssetUpdateManyMutationInput {
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  isActive: BoolFieldUpdateOperationsInput
+  isPrimary: BoolFieldUpdateOperationsInput
   order: IntFieldUpdateOperationsInput
   updatedAt: NullableDateTimeFieldUpdateOperationsInput
 }
@@ -20904,6 +20955,8 @@ input ProductAssetUpdateWithoutAssetInput {
   Product: ProductUpdateOneRequiredWithoutProductAssetNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  isActive: BoolFieldUpdateOperationsInput
+  isPrimary: BoolFieldUpdateOperationsInput
   order: IntFieldUpdateOperationsInput
   updatedAt: NullableDateTimeFieldUpdateOperationsInput
 }
@@ -20912,6 +20965,8 @@ input ProductAssetUpdateWithoutProductInput {
   Asset: AssetUpdateOneRequiredWithoutProductAssetNestedInput
   createdAt: DateTimeFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
+  isActive: BoolFieldUpdateOperationsInput
+  isPrimary: BoolFieldUpdateOperationsInput
   order: IntFieldUpdateOperationsInput
   updatedAt: NullableDateTimeFieldUpdateOperationsInput
 }
@@ -20937,6 +20992,8 @@ input ProductAssetWhereInput {
   assetId: UuidFilter
   createdAt: DateTimeFilter
   id: UuidFilter
+  isActive: BoolFilter
+  isPrimary: BoolFilter
   order: IntFilter
   productId: UuidFilter
   updatedAt: DateTimeNullableFilter
@@ -21177,6 +21234,7 @@ input ProductCreateInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -21214,6 +21272,7 @@ input ProductCreateManyCompanyInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unit: String
   updatedAt: DateTime
@@ -21256,6 +21315,7 @@ input ProductCreateManyProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unit: String
   updatedAt: DateTime
@@ -21298,6 +21358,7 @@ input ProductCreateManyProjectInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unit: String
   updatedAt: DateTime
@@ -21341,6 +21402,7 @@ input ProductCreateManyUnitMasterInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   updatedAt: DateTime
   updatedBy: String
@@ -21382,6 +21444,7 @@ input ProductCreateManyUser_Product_createdByToUserInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unit: String
   updatedAt: DateTime
@@ -21425,6 +21488,7 @@ input ProductCreateManyUser_Product_updatedByToUserInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unit: String
   updatedAt: DateTime
@@ -21793,6 +21857,7 @@ input ProductCreateWithoutApplicationInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -21854,6 +21919,7 @@ input ProductCreateWithoutAwPricesInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -21915,6 +21981,7 @@ input ProductCreateWithoutCartItemInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -21976,6 +22043,7 @@ input ProductCreateWithoutCategoryProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22037,6 +22105,7 @@ input ProductCreateWithoutChildProductsInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22098,6 +22167,7 @@ input ProductCreateWithoutCompanyInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22159,6 +22229,7 @@ input ProductCreateWithoutCrossSellProductsInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22220,6 +22291,7 @@ input ProductCreateWithoutOrderItemInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22281,6 +22353,7 @@ input ProductCreateWithoutOtherProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22342,6 +22415,7 @@ input ProductCreateWithoutPackageProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22403,6 +22477,7 @@ input ProductCreateWithoutParentCrossSellProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22464,6 +22539,7 @@ input ProductCreateWithoutParentProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22525,6 +22601,7 @@ input ProductCreateWithoutParentUpSellProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22586,6 +22663,7 @@ input ProductCreateWithoutProductAssetInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22647,6 +22725,7 @@ input ProductCreateWithoutProductDigitalContentsInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22708,6 +22787,7 @@ input ProductCreateWithoutProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22769,6 +22849,7 @@ input ProductCreateWithoutProductMetaInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22830,6 +22911,7 @@ input ProductCreateWithoutProductMetaKeyInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22891,6 +22973,7 @@ input ProductCreateWithoutProductReviewsInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -22952,6 +23035,7 @@ input ProductCreateWithoutProductsTagsInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -23013,6 +23097,7 @@ input ProductCreateWithoutProjectInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -23074,6 +23159,7 @@ input ProductCreateWithoutSubscriptionProductInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -23136,6 +23222,7 @@ input ProductCreateWithoutUnitMasterInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   updatedAt: DateTime
   vendorCost: Int
@@ -23196,6 +23283,7 @@ input ProductCreateWithoutUpsellProductsInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -23257,6 +23345,7 @@ input ProductCreateWithoutUser_Product_createdByToUserInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -23318,6 +23407,7 @@ input ProductCreateWithoutUser_Product_updatedByToUserInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -23380,6 +23470,7 @@ input ProductCreateWithoutWishListInput {
   subscription: Boolean
   tagline: String
   tags: JSON
+  tax: Float
   type: String
   unitMaster: unitMasterCreateNestedOneWithoutProductInput
   updatedAt: DateTime
@@ -24346,6 +24437,7 @@ input ProductOrderByWithRelationInput {
   subscription: SortOrder
   tagline: SortOrder
   tags: SortOrder
+  tax: SortOrder
   type: SortOrder
   unit: SortOrder
   unitMaster: unitMasterOrderByWithRelationInput
@@ -24921,6 +25013,7 @@ enum ProductScalarFieldEnum {
   subscription
   tagline
   tags
+  tax
   type
   unit
   updatedAt
@@ -24962,6 +25055,7 @@ input ProductScalarWhereInput {
   subscription: BoolFilter
   tagline: StringNullableFilter
   tags: JsonNullableFilter
+  tax: FloatFilter
   type: StringNullableFilter
   unit: UuidNullableFilter
   updatedAt: DateTimeFilter
@@ -25024,6 +25118,7 @@ input ProductUpdateInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25058,6 +25153,7 @@ input ProductUpdateManyMutationInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   vendorCost: NullableIntFieldUpdateOperationsInput
@@ -25443,6 +25539,7 @@ input ProductUpdateWithoutApplicationInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25504,6 +25601,7 @@ input ProductUpdateWithoutAwPricesInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25565,6 +25663,7 @@ input ProductUpdateWithoutCartItemInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25626,6 +25725,7 @@ input ProductUpdateWithoutCategoryProductInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25687,6 +25787,7 @@ input ProductUpdateWithoutChildProductsInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25748,6 +25849,7 @@ input ProductUpdateWithoutCompanyInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25809,6 +25911,7 @@ input ProductUpdateWithoutCrossSellProductsInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25870,6 +25973,7 @@ input ProductUpdateWithoutOrderItemInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25931,6 +26035,7 @@ input ProductUpdateWithoutOtherProductInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -25992,6 +26097,7 @@ input ProductUpdateWithoutPackageProductInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26053,6 +26159,7 @@ input ProductUpdateWithoutParentCrossSellProductInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26114,6 +26221,7 @@ input ProductUpdateWithoutParentProductInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26175,6 +26283,7 @@ input ProductUpdateWithoutParentUpSellProductInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26236,6 +26345,7 @@ input ProductUpdateWithoutProductAssetInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26297,6 +26407,7 @@ input ProductUpdateWithoutProductDigitalContentsInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26358,6 +26469,7 @@ input ProductUpdateWithoutProductInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26419,6 +26531,7 @@ input ProductUpdateWithoutProductMetaInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26480,6 +26593,7 @@ input ProductUpdateWithoutProductMetaKeyInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26541,6 +26655,7 @@ input ProductUpdateWithoutProductReviewsInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26602,6 +26717,7 @@ input ProductUpdateWithoutProductsTagsInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26663,6 +26779,7 @@ input ProductUpdateWithoutProjectInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26724,6 +26841,7 @@ input ProductUpdateWithoutSubscriptionProductInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26786,6 +26904,7 @@ input ProductUpdateWithoutUnitMasterInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   updatedAt: DateTimeFieldUpdateOperationsInput
   vendorCost: NullableIntFieldUpdateOperationsInput
@@ -26846,6 +26965,7 @@ input ProductUpdateWithoutUpsellProductsInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26907,6 +27027,7 @@ input ProductUpdateWithoutUser_Product_createdByToUserInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -26968,6 +27089,7 @@ input ProductUpdateWithoutUser_Product_updatedByToUserInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -27030,6 +27152,7 @@ input ProductUpdateWithoutWishListInput {
   subscription: BoolFieldUpdateOperationsInput
   tagline: NullableStringFieldUpdateOperationsInput
   tags: JSON
+  tax: FloatFieldUpdateOperationsInput
   type: NullableStringFieldUpdateOperationsInput
   unitMaster: unitMasterUpdateOneWithoutProductNestedInput
   updatedAt: DateTimeFieldUpdateOperationsInput
@@ -27239,6 +27362,7 @@ input ProductWhereInput {
   subscription: BoolFilter
   tagline: StringNullableFilter
   tags: JsonNullableFilter
+  tax: FloatFilter
   type: StringNullableFilter
   unit: UuidNullableFilter
   unitMaster: UnitMasterRelationFilter
@@ -30960,7 +31084,7 @@ type Query {
   CrossSellProduct(id: String!): CrossSellProducts!
   CrossSellProducts(cursor: CrossSellProductsWhereUniqueInput, distinct: [CrossSellProductsScalarFieldEnum!], orderBy: [CrossSellProductsOrderByWithRelationInput!], skip: Int, take: Int, where: CrossSellProductsWhereInput): [CrossSellProducts!]!
   DigitalContent(id: String!): DigitalContent!
-  DigitalContents(cursor: DigitalContentWhereUniqueInput, distinct: [DigitalContentScalarFieldEnum!], orderBy: [DigitalContentOrderByWithRelationInput!], skip: Int, take: Int, where: DigitalContentWhereInput): [DigitalContent!]!
+  DigitalContents(cursor: DigitalContentWhereUniqueInput, distinct: [DigitalContentScalarFieldEnum!], orderBy: [DigitalContentOrderByWithRelationInput!], skip: Int, take: Int, where: DigitalContentWhereInput): DigitalContents!
   Group(id: String!): Group!
   Groups(cursor: GroupWhereUniqueInput, distinct: [GroupScalarFieldEnum!], orderBy: [GroupOrderByWithRelationInput!], skip: Int, take: Int, where: GroupWhereInput): [Group!]!
   Locations(cursor: RegionWhereUniqueInput, distinct: [RegionScalarFieldEnum!], orderBy: [RegionOrderByWithRelationInput!], skip: Int, take: Int, where: RegionWhereInput): [Region!]!
@@ -37403,7 +37527,6 @@ type UserCustRel {
   isActive: Boolean!
   isVerified: Boolean!
   updatedAt: DateTime
-  user: CoreUser!
   userId: String
 }
 
